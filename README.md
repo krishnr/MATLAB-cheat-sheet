@@ -10,12 +10,15 @@ MATLAB stands for MATrix LABoratory. It is a powerful numerical computing langua
     2. [Helper Commands](#commands)
     3. [Variables and Expressions](#vars)
 2. [Matrices and Vectors](#matrices)
-    1. [Variables](#variables)
-    2. [Arrays](#arrays)
-    3. [Logic and Control Structures](#logic)
-3. [Functions and Scripts](#functions)
-    1. [Objects](#objects)
-    2. [Functions](#functions)
+    1. [Declarations](#declarations)
+    2. [Splicing and Dicing](#splice)
+    3. [Arithmetic and Operations](#arith)
+3. [Plots](#plots)
+4. [Functions and Scripts](#functions)
+5. [Logic](#logic)
+6. [Math](#math)
+7. [Optimization](#optimization)
+8. [Machine Learning](#ML)
 
 <a name="basics"></a>
 ## 1. Basics
@@ -137,9 +140,9 @@ A.d.e = false;
 
 <a name="matrices"></a>
 ##2. Matrices and Vectors
-**Indices in Matlab start 1, not 0**
+**IMPORTANT: Indices in Matlab start at 1, not 0**
 
-<a name="arith"></a>
+<a name="declarations"></a>
 ### i. Declarations
 ```matlab
 % Vectors
@@ -257,10 +260,64 @@ exp(A) % exponentiate each element
 expm(A) % calculate the matrix exponential
 sqrt(A) % take the square root of each element
 sqrtm(A) %  find the matrix whose square is A
+
+% Solving matrix equations (if no solution, returns a least squares solution)
+% The \ and / operators are equivalent to the functions mldivide and mrdivide
+x=A\b % Solves Ax=b. Faster and more numerically accurate than using inv(A)*b.
+x=b/A % Solves xA=b
+
+inv(A) % calculate the inverse matrix
+pinv(A) % calculate the pseudo-inverse
+
+% Common matrix functions
+zeros(m,n) % m x n matrix of 0's
+ones(m,n) % m x n matrix of 1's
+diag(A) % Extracts the diagonal elements of a matrix A
+diag(x) % Construct a matrix with diagonal elements listed in x, and zeroes elsewhere
+eye(m,n) % Identity matrix
+linspace(x1, x2, n) % Return n equally spaced points, with min x1 and max x2
+inv(A) % Inverse of matrix A
+det(A) % Determinant of A
+eig(A) % Eigenvalues and eigenvectors of A
+trace(A) % Trace of matrix - equivalent to sum(diag(A))
+isempty(A) % Tests if array is empty
+all(A) % Tests if all elements are nonzero or true
+any(A) % Tests if any elements are nonzero or true
+isequal(A, B) % Tests equality of two arrays
+numel(A) % Number of elements in matrix
+triu(x) % Returns the upper triangular part of x
+tril(x) % Returns the lower triangular part of x
+cross(A,B) %  Returns the cross product of the vectors A and B
+dot(A,B) % Returns scalar product of two vectors (must have the same length)
+transpose(A) % Returns the transpose of A
+fliplr(A) % Flip matrix left to right
+flipud(A) % Flip matrix up to down
+
+% Matrix Factorisations
+[L, U, P] = lu(A) % LU decomposition: PA = LU,L is lower triangular, U is upper triangular, P is permutation matrix
+[P, D] = eig(A) % eigen-decomposition: AP = PD, P's columns are eigenvectors and D's diagonals are eigenvalues
+[U,S,V] = svd(X) % SVD: XV = US, U and V are unitary matrices, S has non-negative diagonal elements in decreasing order
+
+% Common vector functions
+max     % largest component
+min     % smallest component
+length  % length of a vector
+sort    % sort in ascending order
+sum     % sum of elements
+prod    % product of elements
+mode    % modal value
+median  % median value
+mean    % mean value
+std     % standard deviation
+perms(x) % list all permutations of elements of x
+find(x) % Finds all non-zero elements of x and returns their indexes, can use comparison operators, 
+        % i.e. find( x == 3 ) returns indexes of elements that are equal to 3
+        % i.e. find( x >= 3 ) returns indexes of elements greater than or equal to 3
+
 ```
 
 
-<a name="Plots"></a>
+<a name="plots"></a>
 ## 3. Plots
 ```matlab
 % Plotting
@@ -332,9 +389,11 @@ subplot(2,3,1); % select the first position in a 2-by-3 grid of subplots
 plot(x1); title('First Plot') % plot something in this position
 subplot(2,3,2); % select second position in the grid
 plot(x2); title('Second Plot') % plot something there
+```
 
-
-
+<a name="functions"></a>
+## 4. Functions and Scripts
+```matlab
 % Calling functions can be done in either of two ways:
 % Standard function syntax:
 load('myFile.mat', 'y') % arguments within parentheses, separated by commas
@@ -387,7 +446,11 @@ double_input(6) % ans = 12
 sqr = @(x) x.^2;
 sqr(10) % ans = 100
 doc function_handle % find out more
+```
 
+<a name="logic"></a>
+## 5. Logic
+```matlab
 % User input
 a = input('Enter the value: ')
 
@@ -429,8 +492,11 @@ tic
 A = rand(1000);
 A*A*A*A*A*A*A;
 toc
+```
 
-
+<a name="math"></a>
+## 6. Math
+```
 % Common math functions
 sin(x)
 cos(x)
@@ -465,121 +531,19 @@ conj(x)  % Returns the complex conjugate
 pi
 NaN
 inf
+```
 
-% Solving matrix equations (if no solution, returns a least squares solution)
-% The \ and / operators are equivalent to the functions mldivide and mrdivide
-x=A\b % Solves Ax=b. Faster and more numerically accurate than using inv(A)*b.
-x=b/A % Solves xA=b
-
-inv(A) % calculate the inverse matrix
-pinv(A) % calculate the pseudo-inverse
-
-% Common matrix functions
-zeros(m,n) % m x n matrix of 0's
-ones(m,n) % m x n matrix of 1's
-diag(A) % Extracts the diagonal elements of a matrix A
-diag(x) % Construct a matrix with diagonal elements listed in x, and zeroes elsewhere
-eye(m,n) % Identity matrix
-linspace(x1, x2, n) % Return n equally spaced points, with min x1 and max x2
-inv(A) % Inverse of matrix A
-det(A) % Determinant of A
-eig(A) % Eigenvalues and eigenvectors of A
-trace(A) % Trace of matrix - equivalent to sum(diag(A))
-isempty(A) % Tests if array is empty
-all(A) % Tests if all elements are nonzero or true
-any(A) % Tests if any elements are nonzero or true
-isequal(A, B) % Tests equality of two arrays
-numel(A) % Number of elements in matrix
-triu(x) % Returns the upper triangular part of x
-tril(x) % Returns the lower triangular part of x
-cross(A,B) %  Returns the cross product of the vectors A and B
-dot(A,B) % Returns scalar product of two vectors (must have the same length)
-transpose(A) % Returns the transpose of A
-fliplr(A) % Flip matrix left to right
-flipud(A) % Flip matrix up to down
-
-% Matrix Factorisations
-[L, U, P] = lu(A) % LU decomposition: PA = LU,L is lower triangular, U is upper triangular, P is permutation matrix
-[P, D] = eig(A) % eigen-decomposition: AP = PD, P's columns are eigenvectors and D's diagonals are eigenvalues
-[U,S,V] = svd(X) % SVD: XV = US, U and V are unitary matrices, S has non-negative diagonal elements in decreasing order
-
-% Common vector functions
-max     % largest component
-min     % smallest component
-length  % length of a vector
-sort    % sort in ascending order
-sum     % sum of elements
-prod    % product of elements
-mode    % modal value
-median  % median value
-mean    % mean value
-std     % standard deviation
-perms(x) % list all permutations of elements of x
-find(x) % Finds all non-zero elements of x and returns their indexes, can use comparison operators, 
-        % i.e. find( x == 3 ) returns indexes of elements that are equal to 3
-        % i.e. find( x >= 3 ) returns indexes of elements greater than or equal to 3
-
-
-% Classes
-% Matlab can support object-oriented programming. 
-% Classes must be put in a file of the class name with a .m extension. 
-% To begin, we create a simple class to store GPS waypoints.
-% Begin WaypointClass.m
-classdef WaypointClass % The class name.
-  properties % The properties of the class behave like Structures
-    latitude 
-    longitude 
-  end
-  methods 
-    % This method that has the same name of the class is the constructor. 
-    function obj = WaypointClass(lat, lon)
-      obj.latitude = lat;
-      obj.longitude = lon;
-    end
-
-    % Other functions that use the Waypoint object
-    function r = multiplyLatBy(obj, n)
-      r = n*[obj.latitude];
-    end
-
-    % If we want to add two Waypoint objects together without calling
-    % a special function we can overload Matlab's arithmetic like so:
-    function r = plus(o1,o2)
-      r = WaypointClass([o1.latitude] +[o2.latitude], ...
-                        [o1.longitude]+[o2.longitude]);
-    end
-  end
-end
-% End WaypointClass.m
-
-% We can create an object of the class using the constructor
-a = WaypointClass(45.0, 45.0)
-
-% Class properties behave exactly like Matlab Structures.
-a.latitude = 70.0
-a.longitude = 25.0
-
-% Methods can be called in the same way as functions
-ans = multiplyLatBy(a,3)
-
-% The method can also be called using dot notation. In this case, the object 
-% does not need to be passed to the method.
-ans = a.multiplyLatBy(a,1/3)
-
-% Matlab functions can be overloaded to handle objects. 
-% In the method above, we have overloaded how Matlab handles 
-% the addition of two Waypoint objects.
-b = WaypointClass(15.0, 32.0)
-c = a + b
-
+<a name="optimization"></a>
+## 7. Optimization
+```matlab
 Optimization:
 
 fmincon function
 ```
 
-## More on Matlab
+<a name="ML"></a>
+## 8. Machine Learning
+```matlab
 
-* [The official website](http://www.mathworks.com/products/matlab/)
-* [The official MATLAB Answers forum](http://www.mathworks.com/matlabcentral/answers/)
-* [Loren on the Art of MATLAB](http://blogs.mathworks.com/loren/)
-* [Cleve's Corner](http://blogs.mathworks.com/cleve/)
+
+```

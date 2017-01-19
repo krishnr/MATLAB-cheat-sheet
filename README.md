@@ -520,7 +520,7 @@ toc
 ## 6. Math/Engineering
 <a name="common"></a>
 ### i. Common Math Functions
-```
+```matlab
 sin(x)
 cos(x)
 tan(x)

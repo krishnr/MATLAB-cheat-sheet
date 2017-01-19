@@ -15,8 +15,10 @@ MATLAB stands for MATrix LABoratory. It is a powerful numerical computing langua
     3. [Arithmetic and Operations](#arith)
 3. [Plots](#plots)
 4. [Functions and Scripts](#functions)
-5. [Logic](#logic)
-6. [Math](#math)
+5. [Programming Logic](#logic)
+6. [Math/Engineering](#math)
+    1. [Common Math Functions](#common)
+    2. [Transfer Functions](#transfer)
 7. [Optimization](#optimization)
 8. [Machine Learning](#ML)
 
@@ -91,6 +93,8 @@ format long     % 15 decimals
 format bank     % only two digits after decimal point - for financial calculations
 fprintf('text') % print "text" to the screen
 disp('text')    % print "text" to the screen
+
+% pressing the up key shows you a history of previous commands
 ```
 
 <a name="vars"></a>
@@ -136,6 +140,10 @@ char(a(1)) % ans = one - returns a string
 A.b = {'one','two'};
 A.c = [1 2];
 A.d.e = false;
+
+% Variables can be saved to .mat files
+save('myFileName.mat') % Save the variables in your Workspace
+load('myFileName.mat') % Load saved variables into Workspace
 ```
 
 <a name="matrices"></a>
@@ -239,7 +247,7 @@ A(:, 1) =[] % Delete the first column of the matrix
 
 <a name="arith"></a>
 ### iii. Arithmetic and Operations
-```
+```matlab
 transpose(A) % Transpose the matrix, which is the same as:
 A one
 
@@ -389,31 +397,52 @@ subplot(2,3,1); % select the first position in a 2-by-3 grid of subplots
 plot(x1); title('First Plot') % plot something in this position
 subplot(2,3,2); % select second position in the grid
 plot(x2); title('Second Plot') % plot something there
+
+% Given
+x1 = [-3:0.5:3];
+x2 = x1;
+y = randi(500, length(x1), length(x1));
+
+% Show a 3-D plot
+figure
+subplot(2,1,1);
+surf(x1,x2,y);
+xlabel(’x_1’);
+ylabel(’x_2’);
+
+% Show contours
+subplot(2,1,2);
+contour(x1,x2,y);
+xlabel(’x_{1}’);
+ylabel(’x_{2}’);
+axis equal
+
+% Show a colour map
+figure
+imagesc(x1,x2,y)
+xlabel(’x_{1}’);
+ylabel(’x_{2}’);
 ```
 
 <a name="functions"></a>
 ## 4. Functions and Scripts
 ```matlab
-% Calling functions can be done in either of two ways:
+% Calling Functions
 % Standard function syntax:
-load('myFile.mat', 'y') % arguments within parentheses, separated by commas
+load('myFile.mat', 'y')
 % Command syntax:
 load myFile.mat y   % no parentheses, and spaces instead of commas
-% Note the lack of quote marks in command form: inputs are always passed as
-% literal text - cannot pass variable values. Also, can't receive output:
-[V,D] = eig(A);  % this has no equivalent in command form
+
+% Calling a function from a script
+% [arguments out] = function_name(arguments in)
+[V,D] = eig(A);
 [~,D] = eig(A);  % if you only want D and not V
 
 % To use functions or scripts, they must be on your path or current directory
-path % display current path
+path % displays current path
 addpath /path/to/dir % add to path
 rmpath /path/to/dir % remove from path
 cd /path/to/move/into % change directory
-
-
-% Variables can be saved to .mat files
-save('myFileName.mat') % Save the variables in your Workspace
-load('myFileName.mat') % Load saved variables into Workspace
 
 % M-file Scripts
 % A script file is an external file that contains a sequence of statements.
@@ -432,16 +461,8 @@ function output = double_input(x)
 end
 double_input(6) % ans = 12
 
-
-% You can also have subfunctions and nested functions.
-% Subfunctions are in the same file as the primary function, and can only be
-% called by functions in the file. Nested functions are defined within another
-% functions, and have access to both its workspace and their own workspace.
-
 % If you want to create a function without creating a new file you can use an
-% anonymous function. Useful when quickly defining a function to pass to
-% another function (eg. plot with fplot, evaluate an indefinite integral
-% with quad, find roots with fzero, or find minimum with fminsearch).
+% anonymous function.
 % Example that returns the square of it's input, assigned to the handle sqr:
 sqr = @(x) x.^2;
 sqr(10) % ans = 100
@@ -449,7 +470,7 @@ doc function_handle % find out more
 ```
 
 <a name="logic"></a>
-## 5. Logic
+## 5. Programming Logic
 ```matlab
 % User input
 a = input('Enter the value: ')
@@ -495,9 +516,10 @@ toc
 ```
 
 <a name="math"></a>
-## 6. Math
+## 6. Math/Engineering
+<a name="common"></a>
+### i. Common Math Functions
 ```
-% Common math functions
 sin(x)
 cos(x)
 tan(x)
@@ -531,19 +553,46 @@ conj(x)  % Returns the complex conjugate
 pi
 NaN
 inf
+
+
+```
+
+<a name="transfer"></a>
+### ii. Transfer Functions
+```matlab
+% Transfer functions
+s = tf('s');
+G = s^2/(s^3 + 100*s^2 + 30*s + 50);
+
+pole(G); % Returns the location(s) of the pole(s) in rad/s
+zero(G); % Returns the location(s) of the zero(s) in rad/s
+pzmap(G); % Plots the locations of both the pole(s) and zero(s)
+
+bandwidth(closed_loop_system); % Returns bandwidth of a closed loop transfer function in rad/s
+bode(closed_loop_system) % Creates bode plot of system
+rlocus(closed_loop_system) % Plots a root locus of the specified system
+
+margin(open_loop_system); % Creates a bode plot, displaying the gain and phase margins of an open loop transfer function
+
 ```
 
 <a name="optimization"></a>
 ## 7. Optimization
 ```matlab
-Optimization:
-
-fmincon function
+% fmincon
 ```
 
 <a name="ML"></a>
 ## 8. Machine Learning
 ```matlab
 
+
+```
+
+
+<a name="ML"></a>
+## 8. Simulink
+```matlab
+simulink % starts Simulink
 
 ```

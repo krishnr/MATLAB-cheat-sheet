@@ -21,6 +21,7 @@ MATLAB stands for MATrix LABoratory. It is a powerful numerical computing langua
     2. [Transfer Functions](#transfer)
 7. [Optimization](#optimization)
 8. [Machine Learning](#ML)
+9. [Simulink](#simulink)
 
 <a name="basics"></a>
 ## 1. Basics
@@ -590,7 +591,7 @@ margin(open_loop_system); % Creates a bode plot, displaying the gain and phase m
 ```
 
 
-<a name="ML"></a>
+<a name="simulink"></a>
 ## 8. Simulink
 ```matlab
 simulink % starts Simulink

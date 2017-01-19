@@ -592,7 +592,7 @@ margin(open_loop_system); % Creates a bode plot, displaying the gain and phase m
 
 
 <a name="simulink"></a>
-## 8. Simulink
+## 9. Simulink
 ```matlab
 simulink % starts Simulink
 

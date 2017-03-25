@@ -19,9 +19,10 @@ MATLAB stands for MATrix LABoratory. It is a powerful numerical computing langua
 6. [Math/Engineering](#math)
     1. [Common Math Functions](#common)
     2. [Transfer Functions](#transfer)
-7. [Optimization](#optimization)
-8. [Machine Learning](#ML)
-9. [Simulink](#simulink)
+7. [Vectorization](#vectorization)
+8. [Optimization](#optimization)
+9. [Machine Learning](#ML)
+10. [Simulink](#simulink)
 
 <a name="basics"></a>
 ## 1. Basics
@@ -149,6 +150,7 @@ load('myFileName.mat') % Load saved variables into Workspace
 
 <a name="matrices"></a>
 ##2. Matrices and Vectors
+
 **IMPORTANT: Indices in Matlab start at 1, not 0**
 
 <a name="declarations"></a>
@@ -243,6 +245,8 @@ A(:, [3 1 2]) % Rearrange the columns of original matrix
 
 A(1, :) =[] % Delete the first row of the matrix
 A(:, 1) =[] % Delete the first column of the matrix
+
+squeeze(A); % Removes singular dimensions ie. 2x1x3 -> 2x3
 ```
 
 
@@ -306,6 +310,7 @@ flipud(A) % Flip matrix up to down
 [L, U, P] = lu(A) % LU decomposition: PA = LU,L is lower triangular, U is upper triangular, P is permutation matrix
 [P, D] = eig(A) % eigen-decomposition: AP = PD, P's columns are eigenvectors and D's diagonals are eigenvalues
 [U,S,V] = svd(X) % SVD: XV = US, U and V are unitary matrices, S has non-negative diagonal elements in decreasing order
+[Q, R] = qr(A) % if A is mxn, Q is mxm and R is mxn upper triangular
 
 % Common vector functions
 max     % largest component
@@ -354,6 +359,9 @@ semilogy(x, y) % A plot with logarithmic y-axis
 
 fplot (@(x) x^2, [2,5]) % plot the function x^2 from x=2 to x=5
 
+% Creates a meshgrid (2D grid) to calculate a function for every point in the grid
+[X, Y] = meshgrid(x_min:step:x_max, y_min:step:y_max)
+
 grid on % Show grid; turn off with 'grid off'
 axis square % Makes the current axes region square
 axis equal % Set aspect ratio so data units are the same in every direction
@@ -368,6 +376,7 @@ plot3(x,y,z); % 3D line plot
 
 pcolor(A) % Heat-map of matrix: plot as grid of rectangles, coloured by value
 contour(A) % Contour plot of matrix
+contourf(A) % Filled contour plot of matrix
 mesh(A) % Plot as a mesh surface
 
 h = figure % Create new figure object, with handle h
@@ -555,6 +564,9 @@ pi
 NaN
 inf
 
+% Given a meshgrid X,Y and a function defined on the meshgrid like Gauss, interpolates the value of the function at the point u1,u2
+interp2(X,Y,Gauss,u1,u2)
+
 
 ```
 
@@ -577,14 +589,20 @@ margin(open_loop_system); % Creates a bode plot, displaying the gain and phase m
 
 ```
 
+<a name="vectorization"></a>
+## 7. Vectorization
+<a href="https://www.mathworks.com/help/matlab/matlab_prog/vectorization.html">Tips to vectorize your code to get rid of loops and make it run more efficiently.</a>
+```matlab
+```
+
 <a name="optimization"></a>
-## 7. Optimization
+## 8. Optimization
 ```matlab
 % fmincon
 ```
 
 <a name="ML"></a>
-## 8. Machine Learning
+## 9. Machine Learning
 ```matlab
 
 
@@ -592,7 +610,7 @@ margin(open_loop_system); % Creates a bode plot, displaying the gain and phase m
 
 
 <a name="simulink"></a>
-## 9. Simulink
+## 10. Simulink
 ```matlab
 simulink % starts Simulink
 

@@ -149,7 +149,7 @@ load('myFileName.mat') % Load saved variables into Workspace
 ```
 
 <a name="matrices"></a>
-##2. Matrices and Vectors
+## 2. Matrices and Vectors
 
 **IMPORTANT: Indices in Matlab start at 1, not 0**
 
